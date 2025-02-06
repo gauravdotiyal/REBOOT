@@ -1,24 +1,75 @@
 <html>
-     <script>
-        function Todo(){
-            const title = document.getElementById("title").value;
-            const description = document.getElementById("description").value;
-            const todo =document.getElementById("container");
-            todo.innerHTML = "Title "+title+"Description "+description+" ";
-        }
-     </script>
-    <div>
-        <input type="text "  placeholder="Title" id="title">
-        <br><br>
-        <input type="text" placeholder="description" id="description">
-        <button onclick="Todo()">To Do</button>
+  <script>
+    let globalId = 1;
+    function markAsDone(todoId) {
+      const parent = document.getElementById(todoId);
+      console.log("Done")
+      parent.children[2].innerHTML = "Done";
+    }
+    function createChild(title, description, id) {
+      // const originalHTML=document.getElementById("container").
+      // innerHTML;
+      // document.getElementById("container").
+      // innerHTML = originalHTML+
+      // `<div>
+      //     <div>${title}</div>
+      //     <div>${description}
+      // </div>
+      //     <button>Mark as Done</button>
+      // `
 
-        <div id="container">
-            <div>
+      // document.createElement("div") method ==> Better way to do above
+      const outerDiv = document.createElement("div");
+      const titleDiv = document.createElement("div");
+      titleDiv.innerHTML = title;
+      const descriptionDiv = document.createElement("div");
+      descriptionDiv.innerHTML = description;
+      const button = document.createElement("button");
+      button.innerHTML = "Mark as Done";
+      button.setAttribute("onclick", `markAsDone(${id})`);
+      outerDiv.appendChild(titleDiv);
+      outerDiv.appendChild(descriptionDiv);
+      outerDiv.appendChild(button);
+      outerDiv.setAttribute("id", id);
+      return outerDiv;
+    }
+    function addTodo() {
+      const title = document.getElementById("title").value;
+      const description = document.getElementById("description").value;
+      const parent = document.getElementById("container");
+
+      parent.appendChild(createChild(title, description, globalId++));
+    }
+     
+    //if our data coming from the backend and getting updated everytime then we use this 
+    function updateTodos(state){
+        const parent = document.getElementById("container");
+        parent.innerHTML="";
+        state.forEach(todo=>{
+            parent.appendChild(createChild(todo.title,todo.description,todo.id));
+        })
+    } 
+    // everytime link get updated the data will be updated this same thing done by state management in react 
+    window.setInterval(async ()=>{
+        const response =await fetch("Link");
+        const state=await response.json();
+        updateTodos(state.todos);
+    },2000)
+ 
+
+  </script>
+  <div>
+    <input type="text " placeholder="Title" id="title" />
+    <br /><br />
+    <input type="text" placeholder="description" id="description" />
+    <button onclick="addTodo()">To Do</button>
+
+    <div id="container">
+      <!-- <div>
                  <div>Title of todo 1</div>
                  <div>Description of todo 1</div>
                  <button>Mark as Done</button>
-            </div>
-        </div>
+            </div> -->
     </div>
+  </div>
 </html>
