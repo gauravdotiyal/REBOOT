@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        // debounced function of any function it saves so many unnecessary call to backend
+        let timer;
+        function debounced(){
+           clearTimeout(timer);
+           timer=setTimeout(function(){
+            simpleInterest();
+           },1000)
+        }
+        async function simpleInterest(){
+            const principal = document.getElementById("principal").value;
+            const rate = document.getElementById("rate").value;
+            const time = document.getElementById("time").value;
+            
+            // it is by simple dom
+            const simpleInterest = (parseInt(principal) * parseInt(rate) * parseInt(time)) / 100; 
+            document.getElementById("ans").innerHTML = "Simple Interest is: " + simpleInterest;
+
+            // if done by some backend with Link and query parameters
+            // const response =await fetch("Link");
+            // const ans=response.text();
+            // document.getElementById("ans").innerHTML = "Simple Interest is: " + ans;
+
+        }
+    </script>
+</head>
+<body>
+     <div id="Principal"> 
+        <input oninput="debounced()" type="number" placeholder="pricipal" id="principal"></input>
+        <br><br>
+        <input oninput="debounced()" type="number" placeholder="rate"  id="rate"></input>
+        <br> <br>
+        <input oninput="debounced()" type="number" placeholder="time" id="time" ></input>
+     </div>
+     <br><br>
+     <div>
+        <button onclick="simpleInterest()">Simple Interest</button>
+     </div>
+      <div id="ans"></div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<html>
+     <script>
+        function Todo(){
+            const title = document.getElementById("title").value;
+            const description = document.getElementById("description").value;
+            const todo =document.getElementById("container");
+            todo.innerHTML = "Title "+title+"Description "+description+" ";
+        }
+     </script>
+    <div>
+        <input type="text "  placeholder="Title" id="title">
+        <br><br>
+        <input type="text" placeholder="description" id="description">
+        <button onclick="Todo()">To Do</button>
+
+        <div id="container">
+            <div>
+                 <div>Title of todo 1</div>
+                 <div>Description of todo 1</div>
+                 <button>Mark as Done</button>
+            </div>
+        </div>
+    </div>
+</html>
