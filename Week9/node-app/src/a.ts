@@ -41,3 +41,18 @@ function isLegaled(user:User){
 }
 
 console.log(isLegaled(user1))
+
+// generics 
+function generics<T> (arr:T[]){
+  return arr[0];
+}
+
+let output1=generics<string>(["Gaurav"]) ;
+let output2=generics<number>([1,2,3]);
+
+console.log(output1.toUpperCase());
+
+// Importing modules
+// always import modules by import syntax not require ES6 modules
+
+
